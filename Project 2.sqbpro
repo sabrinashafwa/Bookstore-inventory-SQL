@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/USER/OneDrive - UNIVERSITAS INDONESIA/Documents/COOLYEAH/Semester 6/Database/Project.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="150"/><column_width id="3" width="2360"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,9:mainTransaksi"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Detail_Transaksi" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="144"/><column index="2" value="120"/><column index="3" value="108"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Merk" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="99"/><column index="2" value="134"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Pelanggan" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="155"/><column index="2" value="219"/><column index="3" value="271"/><column index="4" value="191"/><column index="5" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Produk" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="120"/><column index="2" value="99"/><column index="3" value="148"/><column index="4" value="133"/><column index="5" value="73"/><column index="6" value="127"/><column index="7" value="61"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Supplier" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="135"/><column index="2" value="240"/><column index="3" value="300"/><column index="4" value="183"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Transaksi" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="111"/><column index="2" value="144"/><column index="3" value="155"/><column index="4" value="194"/><column index="5" value="139"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Keuntungan">SELECT
+Id_Produk, Id_Merk, Jenis_Produk, Id_Supplier,
+SUM (Harga_Jual - Modal) as Keuntungan
+from Produk
+group by Id_Produk
+order by Keuntungan DESC
+limit 5</sql><sql name="Stok per Id_produk">SELECT
+t.Id_Produk, t.Id_Transaksi, t.Kuantitas,
+c.Id_Merk, c.Id_Supplier, c.stok,
+sum(c.stok - t.kuantitas) as stok_terkini
+FROM Detail_Transaksi t left outer join Produk c on t.Id_Produk = c.Id_Produk
+group by c.Id_Produk
+order by stok_terkini ASC
+</sql><sql name="Revenue">SELECT sum (Jumlah_Transaksi) as Revenue FROM Transaksi</sql><sql name="Stok per jenis">select Jenis_Produk, sum(stok) as stok_perjenis
+from produk
+group by Jenis_Produk
+order by stok_perjenis ASC</sql><sql name="barang_masuk">SELECT
+t.Id_Supplier, t.Nama_Supplier,
+sum(c.stok) as barang_masuk
+FROM Supplier t left outer join Produk c on t.Id_Supplier = c.Id_Supplier
+group by c.Id_Supplier
+order by barang_masuk DESC
+</sql><current_tab id="4"/></tab_sql></sqlb_project>
